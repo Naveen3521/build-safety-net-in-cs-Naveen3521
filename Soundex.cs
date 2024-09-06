@@ -3,26 +3,13 @@ using System.Text;
 
 public class Soundex
 {
-    public static string GenerateSoundex(string name)
+   public static string GenerateSoundex(string name)
     {
-        if (string.IsNullOrEmpty(name))
-        {
-            return string.Empty;
-        }
+        return EmptyStringChecker(name);
 
         StringBuilder soundex = new StringBuilder();
         soundex.Append(char.ToUpper(name[0]));
-        char prevCode = GetSoundexCode(name[0]);
-
-        for (int i = 1; i < name.Length && soundex.Length < 4; i++)
-        {
-            char code = GetSoundexCode(name[i]);
-            if (code != '0' && code != prevCode)
-            {
-                soundex.Append(code);
-                prevCode = code;
-            }
-        }
+        SoundexCodeAppender(name, soundex);
 
         while (soundex.Length < 4)
         {
@@ -32,37 +19,55 @@ public class Soundex
         return soundex.ToString();
     }
 
+    private static string EmptyStringChecker(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return string.Empty;
+    }
+
+    private static void SoundexCodeAppender(string name, StringBuilder soundex)
+    {
+        char prevCode = GetSoundexCode(name[0]);
+        for (int i = 0; i < IsValidNameAndSoundex(name, soundex)) ; i++)
+        {
+            char code = GetSoundexCode(name[i]);
+            if (IsValidSoundexCode(code, prevCode))
+            {
+                soundex.Append(code);
+                prevCode = code;
+            }
+        }
+    }
+
+    private static bool IsValidSoundexCode(string code, string prevCode)
+    {
+        return code != '0' && code != prevCode;
+    }
+
+    private static bool IsValidNameAndSoundex(string name, StringBuilder Soundex)
+    {
+        return name.Length && Soundex.Length < 4;
+    }
+
     private static char GetSoundexCode(char c)
     {
         c = char.ToUpper(c);
-        switch (c)
+        var soundMap = new Dictionary<char, char>
         {
-            case 'B':
-            case 'F':
-            case 'P':
-            case 'V':
-                return '1';
-            case 'C':
-            case 'G':
-            case 'J':
-            case 'K':
-            case 'Q':
-            case 'S':
-            case 'X':
-            case 'Z':
-                return '2';
-            case 'D':
-            case 'T':
-                return '3';
-            case 'L':
-                return '4';
-            case 'M':
-            case 'N':
-                return '5';
-            case 'R':
-                return '6';
-            default:
-                return '0'; // For A, E, I, O, U, H, W, Y
-        }
+             { 'B', '1' }, { 'F', '1' }, { 'P', '1' }, { 'V', '1' },
+
+             { 'C', '2' }, { 'G', '2' }, { 'J', '2' }, { 'K', '2' },
+             { 'Q', '2' }, { 'S', '2' }, { 'X', '2' }, { 'Z', '2' },
+
+             { 'D', '3' }, { 'T', '3' },
+
+             { 'L', '4' },
+
+             { 'M', '5' }, { 'N', '5' },
+
+             { 'R', '6' }
+        };
+
+        return soundMap.TryGetValue(c, out char codeValue) ? codeValue : '0';
     }
 }
