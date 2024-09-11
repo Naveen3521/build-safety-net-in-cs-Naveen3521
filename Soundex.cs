@@ -5,24 +5,18 @@ public class Soundex
 {
    public static string GenerateSoundex(string name)
     {
-        return EmptyStringChecker(name);
+       if (string.IsNullOrEmpty(name))
+            return "0000";
 
         StringBuilder soundex = new StringBuilder();
         soundex.Append(char.ToUpper(name[0]));
         SoundexCodeAppender(name, soundex);
-
-        while (soundex.Length < 4)
-        {
-            soundex.Append('0');
-        }
-
-        return soundex.ToString();
+        return PadOrTrimSoundex(soundex);
     }
 
-    private static string EmptyStringChecker(string value)
+    private static string SoundexTrim(string value)
     {
-        if (string.IsNullOrEmpty(value))
-            return string.Empty;
+        return soundex.ToString().PadRight(4, '0').Substring(0, 4);
     }
 
     private static void SoundexCodeAppender(string name, StringBuilder soundex)
