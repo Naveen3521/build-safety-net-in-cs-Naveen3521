@@ -1,42 +1,67 @@
 using System;
 using System.Text;
-
+ 
 public class Soundex
 {
-    public static string GenerateSoundex(string name)
+   public static string GenerateSoundex(string name)
     {
-        if (string.IsNullOrEmpty(name))
+       if (string.IsNullOrEmpty(name))
             return "0000";
-
-        var soundex = new StringBuilder();
+ 
+        StringBuilder soundex = new StringBuilder();
         soundex.Append(char.ToUpper(name[0]));
-
+        SoundexCodeAppender(name, soundex);
+        return PadOrTrimSoundex(soundex);
+    }
+ 
+    private static string SoundexTrim(string value)
+    {
+        return soundex.ToString().PadRight(4, '0').Substring(0, 4);
+    }
+ 
+    private static void SoundexCodeAppender(string name, StringBuilder soundex)
+    {
         char prevCode = GetSoundexCode(name[0]);
-        for (int i = 1; i < name.Length && soundex.Length < 4; i++)
+        for (int i = 0; i < IsValidNameAndSoundex(name, soundex)) ; i++)
         {
             char code = GetSoundexCode(name[i]);
-            if (code != '0' && code != prevCode)
+            if (IsValidSoundexCode(code, prevCode))
             {
                 soundex.Append(code);
                 prevCode = code;
             }
         }
-
-        return soundex.ToString().PadRight(4, '0').Substring(0, 4);
     }
-
+ 
+    private static bool IsValidSoundexCode(string code, string prevCode)
+    {
+        return code != '0' && code != prevCode;
+    }
+ 
+    private static bool IsValidNameAndSoundex(string name, StringBuilder Soundex)
+    {
+        return name.Length && Soundex.Length < 4;
+    }
+ 
     private static char GetSoundexCode(char c)
     {
         c = char.ToUpper(c);
-        return c switch
+        var soundMap = new Dictionary<char, char>
         {
-            'B' or 'F' or 'P' or 'V' => '1',
-            'C' or 'G' or 'J' or 'K' or 'Q' or 'S' or 'X' or 'Z' => '2',
-            'D' or 'T' => '3',
-            'L' => '4',
-            'M' or 'N' => '5',
-            'R' => '6',
-            _ => '0'
+             { 'B', '1' }, { 'F', '1' }, { 'P', '1' }, { 'V', '1' },
+ 
+             { 'C', '2' }, { 'G', '2' }, { 'J', '2' }, { 'K', '2' },
+             { 'Q', '2' }, { 'S', '2' }, { 'X', '2' }, { 'Z', '2' },
+ 
+             { 'D', '3' }, { 'T', '3' },
+ 
+             { 'L', '4' },
+ 
+             { 'M', '5' }, { 'N', '5' },
+ 
+             { 'R', '6' }
         };
+ 
+        return soundMap.TryGetValue(c, out char codeValue) ? codeValue : '0';
     }
 }
