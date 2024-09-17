@@ -31,7 +31,7 @@ public class Soundex
     
    private static bool NameAndSoundexValidator(string name,StringBuilder soundex)
    {
-       return name.Length && soundex.Length<4;
+       return name.Length<4 && soundex.Length<4;
    }
    private static bool ShouldAppendCode(char code, char prevCode)
    {
