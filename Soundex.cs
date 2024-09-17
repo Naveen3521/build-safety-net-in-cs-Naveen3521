@@ -18,7 +18,7 @@ public class Soundex
 
     private static void AppendSoundexCodes(string name, StringBuilder soundex, ref char prevCode)
     {
-       for (int i = 1; i < name.Length && soundex.Length < 4; i++)
+       for (int i = 1; NameAndSoundexValidator(name,soundex) < 4; i++)
        {
          char code = GetSoundexCode(name[i]);
          if (ShouldAppendCode(code, prevCode))
@@ -28,7 +28,11 @@ public class Soundex
          }
       }
     }
-
+    
+   private static bool NameAndSoundexValidator(string name,StringBuilder soundex)
+   {
+       return name.Length && soundex.Length<4;
+   }
    private static bool ShouldAppendCode(char code, char prevCode)
    {
        return code != '0' && code != prevCode;
