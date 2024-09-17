@@ -79,9 +79,9 @@ public void HandlesNamesWithRepeatedCharacters(string name, string expectedSound
 }
 
 [Theory]
-[InlineData("AEIOU", "0000")]
+[InlineData("AEIOU", "A000")]
 [InlineData("I", "I000")]
-[InlineData("EAOUI", "I000")]
+[InlineData("EAOUI", "E000")]
 public void HandlesNamesWithAllVowels(string name, string expectedSoundex)
 {
     // Act
