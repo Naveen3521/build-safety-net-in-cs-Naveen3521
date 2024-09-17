@@ -22,7 +22,7 @@ public class Soundex
     private static void SoundexCodeAppender(string name, StringBuilder soundex)
     {
         char prevCode = GetSoundexCode(name[0]);
-        for (int i = 0; i < IsValidNameAndSoundex(name, soundex)) ; i++)
+        for (int i = 0; i < IsValidNameAndSoundex(name, soundex) ; i++)
         {
             char code = GetSoundexCode(name[i]);
             if (IsValidSoundexCode(code, prevCode))
