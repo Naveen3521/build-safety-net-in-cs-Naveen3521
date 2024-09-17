@@ -18,7 +18,7 @@ public class Soundex
 
     private static void AppendSoundexCodes(string name, StringBuilder soundex, ref char prevCode)
     {
-       for (int i = 1; NameAndSoundexValidator(name,soundex) < 4; i++)
+       for (int i = 1; NameAndSoundexValidator(name,soundex); i++)
        {
          char code = GetSoundexCode(name[i]);
          if (ShouldAppendCode(code, prevCode))
