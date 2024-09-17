@@ -2,7 +2,7 @@ using Xunit;
 
 public class SoundexTests
 {
-    [Theory]
+[Theory]
 [InlineData("", "0000")]
 [InlineData("   ", "0000")]
 [InlineData(null, "0000")]
@@ -78,6 +78,7 @@ public void HandlesNamesWithRepeatedCharacters(string name, string expectedSound
     Assert.Equal(expectedSoundex, actualSoundex);
 }
 
+[Theory]
 [InlineData("AEIOU", "0000")]
 [InlineData("I", "I000")]
 [InlineData("EAOUI", "I000")]
@@ -115,12 +116,6 @@ public void HandlesSpacesBetweenString(string name, string expectedSoundex)
     // Assert
     Assert.Equal(expectedSoundex, actualSoundex);
 }
-
-
-
-
-[Theory]
-[InlineData("1234", "0000")]
 
 [Theory]
 [InlineData("Robert", "R163")]
