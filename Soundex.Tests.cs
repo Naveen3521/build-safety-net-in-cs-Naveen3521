@@ -2,6 +2,7 @@ using Xunit;
 
 public class SoundexTests
 {
+    
 [Theory]
 [InlineData("", "0000")]
 [InlineData("   ", "0000")]
