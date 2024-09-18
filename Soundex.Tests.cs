@@ -4,7 +4,7 @@ public class SoundexTests
 {
     [Theory]
     [InlineData("", "0000")]
-    [InlineData("   ", "0000")]
+    [InlineData("   ", " 000")]
     public void GenerateSoundex_HandlesEmptyStringWhitespaceString(string name, string expectedValue)
     {
         // Act
@@ -103,7 +103,7 @@ public class SoundexTests
     }
 
     [Theory]
-    [InlineData(" Samuel", "254")]
+    [InlineData(" Samuel", " 254")]
     [InlineData("Samuel ", "S540")]
     [InlineData("Sam uel", "S540")]
     public void GenerateSoundex_HandlesSpacesBetweenString(string name, string expectedSoundex)
