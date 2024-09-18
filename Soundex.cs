@@ -27,15 +27,20 @@ public class Soundex
 
     private static void AppendSoundexCodes(string name, StringBuilder soundex, ref char prevCode)
     {
-        for (int i = 1; i < name.Length; i++)
+        for (int index=1; IsValidIndex(index,name,soundex); index++)
         {
-            char code = GetSoundexCode(name[i]);
+            char code = GetSoundexCode(name[index]);
             if (ShouldAppendCode(code, prevCode))
             {
                 soundex.Append(code);
                 prevCode = code;
             }
         }
+    }
+   
+    private static bool IsValidIndex(int currentIndex, string name, StringBuilder soundex)
+    {
+            return currentIndex < name.Length && soundex.Length < 4;
     }
     
     private static bool ShouldAppendCode(char code, char prevCode)
